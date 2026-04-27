@@ -147,13 +147,73 @@ public class Element_distance {
 }
 
 
+//=========================================================================================
+public class Element_distance {
+    public static void main(String[] args) {
+        int arr[]={1,2,1,3,1,4,1};
+        int n=arr.length;
+        int k=6;
+        HashMap<Integer,ArrayList<Integer>>hm=new HashMap<>();
+        int maxd=Integer.MIN_VALUE;
+        int mind=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            if(hm.containsKey(arr[i]))
+            {
+               for(int idx:hm.get(arr[i]))
+               {
+                   int distance=i-idx;
+                   if(distance<=k)
+                   {
+                       maxd=Math.max(maxd,distance);
+                       mind=Math.min(mind,distance);
+                   }
+               }
+            }
+            hm.putIfAbsent(arr[i],new ArrayList<>());
+            hm.get(arr[i]).add(i);
+        }
+        System.out.println(mind);
+        System.out.println(maxd);
+    }
+}
+
+//work perfeclty but take O(n^2)
+
+//===============================================================================================
+public class Element_distance {
+    public static void main(String[] args) {
+        int arr[]={1,2,1,3,1,4,1};
+        int n=arr.length;
+        int k=6;
+        HashMap<Integer,Integer>first=new HashMap<>();
+        HashMap<Integer,Integer>last=new HashMap<>();
+        int maxd=Integer.MIN_VALUE;
+        int mind=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            first.putIfAbsent(arr[i],i);
+            if(last.containsKey(arr[i]))
+            {
+                 int idx=last.get(arr[i]);//0
+                 int distance=i-idx;//2-0
+                 mind=Math.min(mind,distance); //2
+            }
+            last.put(arr[i],i);
+        }
+        //maximum distance
+       for(int key: first.keySet())
+       {
+           int distance=last.get(key)-first.get(key);
+           maxd=Math.max(maxd,distance);
+       }
+        System.out.println(mind);
+        System.out.println(maxd);
+    }
+}
 
 
-
-
-
-
-
+best time complexity=O(n)
 
 
 
